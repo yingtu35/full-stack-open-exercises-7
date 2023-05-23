@@ -1,0 +1,22 @@
+.title {
+    color: steelblue;
+}
+
+.error {
+    color: red;
+    font-size: 1.5rem;
+    border: 3px solid red;
+    background-color: lightgrey;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.success {
+    color: green;
+    font-size: 1.5rem;
+    border: 3px solid green;
+    background-color: lightgrey;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
