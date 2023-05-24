@@ -1,8 +1,21 @@
-import Blog from "./Blog"
-import PropTypes from "prop-types"
+import { useRef } from "react"
+import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
+import Togglable from "./Togglable"
+import BlogForm from "./BlogForm"
+
+import PropTypes from "prop-types"
+
+const blogStyle = {
+  paddingTop: 10,
+  paddingLeft: 2,
+  border: "1px solid black",
+  marginBottom: 5,
+}
+
 const Blogs = () => {
+  const blogFormRef = useRef()
   const blogs = useSelector((state) => state.blogs)
   const compareLikes = (blog1, blog2) => {
     if (blog1.likes > blog2.likes) {
@@ -16,10 +29,19 @@ const Blogs = () => {
 
   const sortedBlogs = blogs.toSorted(compareLikes)
   return (
-    <div className="blogs">
-      {sortedBlogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
+    <div>
+      <Togglable buttonLabel="new note" ref={blogFormRef}>
+        <BlogForm />
+      </Togglable>
+      <div className="blogs">
+        {sortedBlogs.map((blog) => (
+          <Link key={blog.id} to={`/blogs/${blog.id}`}>
+            <div style={blogStyle} className="blog">
+              {blog.title}
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }

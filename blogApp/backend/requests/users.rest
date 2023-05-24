@@ -1,6 +1,9 @@
 GET http://localhost:3003/api/users
 
 ###
+GET http://localhost:3003/api/users/641ade3211f7c84f6991d0d9
+
+###
 POST http://localhost:3003/api/users
 Content-Type: application/json
 

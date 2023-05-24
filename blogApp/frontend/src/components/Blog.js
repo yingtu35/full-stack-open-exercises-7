@@ -1,25 +1,50 @@
-import { useState } from "react"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
-import { addLikes, deleteBlog } from "../reducers/BlogReducer"
-import { notify } from "../reducers/NotificationReducer"
+import { useParams } from "react-router-dom"
+import { useState } from "react"
+import { addLikes, createComment } from "../reducers/BlogReducer"
+// import { notify } from "../reducers/NotificationReducer"
 
-const blogStyle = {
-  paddingTop: 10,
-  paddingLeft: 2,
-  border: "1px solid black",
-  marginBottom: 5,
+const BlogCommentForm = ({ id }) => {
+  const dispatch = useDispatch()
+  const [comment, setComment] = useState("")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const payload = { comment }
+    const isCreated = dispatch(createComment(id, payload))
+    if (isCreated) {
+      setComment("")
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="enter your comment here"
+        />
+        <button type="submit">add comment</button>
+      </div>
+    </form>
+  )
 }
 
-const Blog = ({ blog }) => {
+const Blog = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
+  const id = useParams().id
+  const blog = useSelector((state) =>
+    state.blogs.find((blog) => blog.id === id)
+  )
+  // const user = useSelector((state) => state.user)
 
-  const [showDetail, setShowDetail] = useState(false)
+  // const [showDetail, setShowDetail] = useState(false)
 
-  const toggleShowDetail = () => {
-    setShowDetail((showDetail) => !showDetail)
-  }
+  // const toggleShowDetail = () => {
+  //   setShowDetail((showDetail) => !showDetail)
+  // }
 
   const handleLike = async () => {
     const likedBlog = {
@@ -29,24 +54,50 @@ const Blog = ({ blog }) => {
     dispatch(addLikes(likedBlog))
   }
 
-  const handleRemove = async () => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      const isDeleted = dispatch(deleteBlog(blog))
-      if (isDeleted) {
-        const message = `a new blog ${blog.title} by ${blog.author} deleted`
-        dispatch(notify(message, false))
-      }
-    }
-  }
+  // const handleRemove = async () => {
+  //   if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+  //     const isDeleted = dispatch(deleteBlog(blog))
+  //     if (isDeleted) {
+  //       const message = `a new blog ${blog.title} by ${blog.author} deleted`
+  //       dispatch(notify(message, false))
+  //     }
+  //   }
+  // }
 
-  const isUserBlog = blog.user.username === user.username
+  // const isUserBlog = blog.user.username === user.username
 
-  const hideWhenShowDetail = { display: showDetail ? "none" : "" }
-  const showWhenShowDetail = { display: showDetail ? "" : "none" }
+  // const hideWhenShowDetail = { display: showDetail ? "none" : "" }
+  // const showWhenShowDetail = { display: showDetail ? "" : "none" }
 
   return (
-    <div style={blogStyle} className="blog">
+    <div>
+      <h2>{blog.title}</h2>
       <div>
+        <a href={`//${blog.url}`} target="_blank" rel="noreferrer">
+          {blog.url}
+        </a>
+      </div>
+      <div className="like">
+        {blog.likes} likes
+        <button onClick={handleLike} className="like-button">
+          like
+        </button>
+      </div>
+      <div>added by {blog.user.name}</div>
+      <h3>comments</h3>
+      <BlogCommentForm id={id} />
+      {blog.comments.length === 0 ? (
+        <div>no comments</div>
+      ) : (
+        <ul>
+          {blog.comments.map((comment, idx) => (
+            <li key={idx}>{comment}</li>
+          ))}
+        </ul>
+      )}
+
+      {/*  */}
+      {/* <div>
         {blog.title} {blog.author}
         <button style={hideWhenShowDetail} onClick={toggleShowDetail}>
           View
@@ -70,7 +121,7 @@ const Blog = ({ blog }) => {
             remove
           </button>
         )}
-      </div>
+      </div> */}
     </div>
   )
 }

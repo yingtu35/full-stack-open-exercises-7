@@ -70,6 +70,17 @@ export const addLikes = (likedBlog) => {
   }
 }
 
+export const createComment = (id, comment) => {
+  return async (dispatch) => {
+    try {
+      const returnedBlog = await blogService.addComment(id, comment)
+      dispatch(updateBlog(returnedBlog))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const deleteBlog = (blog) => {
   return async (dispatch) => {
     try {
