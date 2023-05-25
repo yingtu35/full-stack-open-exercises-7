@@ -1,18 +1,20 @@
 import { useRef } from "react"
-import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import Togglable from "./Togglable"
 import BlogForm from "./BlogForm"
+import BlogCard from "./BlogcCard"
 
 import PropTypes from "prop-types"
 
-const blogStyle = {
-  paddingTop: 10,
-  paddingLeft: 2,
-  border: "1px solid black",
-  marginBottom: 5,
-}
+import Grid from "@mui/material/Grid"
+
+// const blogStyle = {
+//   paddingTop: 10,
+//   paddingLeft: 2,
+//   border: "1px solid black",
+//   marginBottom: 5,
+// }
 
 const Blogs = () => {
   const blogFormRef = useRef()
@@ -33,15 +35,25 @@ const Blogs = () => {
       <Togglable buttonLabel="new note" ref={blogFormRef}>
         <BlogForm />
       </Togglable>
-      <div className="blogs">
+      <Grid
+        container
+        spacing={2}
+        className="blogs"
+        sx={{
+          mt: 1,
+        }}
+      >
         {sortedBlogs.map((blog) => (
-          <Link key={blog.id} to={`/blogs/${blog.id}`}>
-            <div style={blogStyle} className="blog">
-              {blog.title}
-            </div>
-          </Link>
+          // <Link key={blog.id} to={`/blogs/${blog.id}`}>
+          //   <div style={blogStyle} className="blog">
+          //     {blog.title}
+          //   </div>
+          // </Link>
+          <Grid key={blog.id} item xs={12} sm={6}>
+            <BlogCard blog={blog} />
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import Blog from "./components/Blog"
@@ -8,6 +8,8 @@ import Login from "./components/Login"
 import Users from "./components/Users"
 import User from "./components/User"
 import Notification from "./components/Notification"
+import Copyright from "./components/Copyright"
+import NavBar from "./components/NavBar"
 
 import blogService from "./services/blogs"
 import loginService from "./services/logins"
@@ -18,9 +20,21 @@ import { notify } from "./reducers/NotificationReducer"
 import { initializeBlogs } from "./reducers/BlogReducer"
 import { setUser } from "./reducers/UserReducer"
 
-const navPadding = {
-  padding: "0.5em",
-}
+import Container from "@mui/material/Container"
+import Box from "@mui/material/Box"
+// import Typography from "@mui/material/Typography"
+
+// const navPadding = {
+//   padding: "0.5em",
+// }
+
+// const Title = () => {
+//   return (
+//     <Typography component="h1" variant="h2" className="title">
+//       Blog App
+//     </Typography>
+//   )
+// }
 
 const App = () => {
   const navigate = useNavigate()
@@ -68,49 +82,76 @@ const App = () => {
   }, [user])
 
   return (
-    <div>
-      <nav>
-        <Link style={navPadding} to={"/blogs"}>
-          blogs
-        </Link>
-        <Link style={navPadding} to={"/users"}>
-          users
-        </Link>
-        {!user ? (
-          <Link style={navPadding} to={"/login"}>
-            login
+    <Container maxWidth="lg">
+      <Box
+        sx={{
+          my: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        {/* <Title /> */}
+        {/* <nav>
+          <Link style={navPadding} to={"/blogs"}>
+            blogs
           </Link>
-        ) : (
-          <span>
-            {user.name} logged in
-            <button onClick={userLogout} id="logout-button">
-              logout
-            </button>
-          </span>
-        )}
-      </nav>
-      <h1 className="title">Blog App</h1>
-      <Notification />
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            user ? <Navigate replace to="/" /> : <Login userLogin={userLogin} />
-          }
-        />
-        <Route path="/users/:id" element={<User />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/blogs/:id" element={<Blog />} />
-        <Route
-          path="/blogs"
-          element={user ? <Blogs /> : <Navigate replace to="/login" />}
-        />
-        <Route
-          path="/"
-          element={user ? <Blogs /> : <Navigate replace to="/login" />}
-        />
-      </Routes>
-    </div>
+          <Link style={navPadding} to={"/users"}>
+            users
+          </Link>
+          {!user ? (
+            <Link style={navPadding} to={"/login"}>
+              login
+            </Link>
+          ) : (
+            <span>
+              {user.name} logged in
+              <button onClick={userLogout} id="logout-button">
+                logout
+              </button>
+            </span>
+          )}
+        </nav> */}
+        <NavBar user={user} userlogout={userLogout} />
+        <Notification />
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              user ? (
+                <Navigate replace to="/" />
+              ) : (
+                <Login userLogin={userLogin} />
+              )
+            }
+          />
+          <Route path="/users/:id" element={<User />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/blogs/:id" element={<Blog />} />
+          <Route
+            path="/blogs"
+            element={user ? <Blogs /> : <Navigate replace to="/login" />}
+          />
+          <Route
+            path="/"
+            element={user ? <Blogs /> : <Navigate replace to="/login" />}
+          />
+          <Route path="*" element={<Navigate replace to="/" />} />
+        </Routes>
+      </Box>
+      <Box
+        component="footer"
+        sx={{
+          py: 3,
+          px: 2,
+          mt: "auto",
+          backgroundColor: "grey",
+        }}
+      >
+        <Copyright />
+      </Box>
+    </Container>
   )
 }
 
