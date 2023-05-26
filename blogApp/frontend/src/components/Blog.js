@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { useState } from "react"
 import { addLikes, createComment } from "../reducers/BlogReducer"
+
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+
 // import { notify } from "../reducers/NotificationReducer"
 
 const BlogCommentForm = ({ id }) => {
@@ -19,16 +25,54 @@ const BlogCommentForm = ({ id }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="enter your comment here"
-        />
-        <button type="submit">add comment</button>
-      </div>
-    </form>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        p: 1,
+        boxShadow: "0 5px 5px 0 #888888",
+        borderRadius: "10px",
+        backgroundColor: "white",
+      }}
+    >
+      <TextField
+        multiline
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        fullWidth
+        rows={4}
+        label="Leave a comment"
+      />
+      <Box
+        sx={{
+          mt: 1,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "end",
+        }}
+      >
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => setComment("")}
+        >
+          Reset
+        </Button>
+        <Button type="submit" variant="contained">
+          Add comment
+        </Button>
+      </Box>
+    </Box>
+    // <form onSubmit={handleSubmit}>
+    //   <div>
+    //     <input
+    //       value={comment}
+    //       onChange={(e) => setComment(e.target.value)}
+    //       placeholder="Enter your comment here"
+    //     />
+    //     <button type="submit">add comment</button>
+    //   </div>
+    // </form>
   )
 }
 
@@ -38,13 +82,6 @@ const Blog = () => {
   const blog = useSelector((state) =>
     state.blogs.find((blog) => blog.id === id)
   )
-  // const user = useSelector((state) => state.user)
-
-  // const [showDetail, setShowDetail] = useState(false)
-
-  // const toggleShowDetail = () => {
-  //   setShowDetail((showDetail) => !showDetail)
-  // }
 
   const handleLike = async () => {
     const likedBlog = {
@@ -54,47 +91,71 @@ const Blog = () => {
     dispatch(addLikes(likedBlog))
   }
 
-  // const handleRemove = async () => {
-  //   if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-  //     const isDeleted = dispatch(deleteBlog(blog))
-  //     if (isDeleted) {
-  //       const message = `a new blog ${blog.title} by ${blog.author} deleted`
-  //       dispatch(notify(message, false))
-  //     }
-  //   }
-  // }
-
-  // const isUserBlog = blog.user.username === user.username
-
-  // const hideWhenShowDetail = { display: showDetail ? "none" : "" }
-  // const showWhenShowDetail = { display: showDetail ? "" : "none" }
-
   return (
-    <div>
-      <h2>{blog.title}</h2>
-      <div>
-        <a href={`//${blog.url}`} target="_blank" rel="noreferrer">
-          {blog.url}
-        </a>
-      </div>
-      <div className="like">
-        {blog.likes} likes
-        <button onClick={handleLike} className="like-button">
-          like
-        </button>
-      </div>
-      <div>added by {blog.user.name}</div>
-      <h3>comments</h3>
-      <BlogCommentForm id={id} />
-      {blog.comments.length === 0 ? (
-        <div>no comments</div>
-      ) : (
-        <ul>
-          {blog.comments.map((comment, idx) => (
-            <li key={idx}>{comment}</li>
-          ))}
-        </ul>
-      )}
+    <Box>
+      <Box
+        sx={{
+          mt: 1,
+          py: 2,
+          px: 2,
+          backgroundColor: "ghostwhite",
+          borderRadius: 5,
+        }}
+      >
+        <Typography component="h2" variant="h4">
+          {blog.title}
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          gutterBottom
+          sx={{ fontStyle: "italic" }}
+        >
+          URL:{" "}
+          <a href={`//${blog.url}`} target="_blank" rel="noreferrer">
+            {blog.url}
+          </a>
+        </Typography>
+        <div className="like">
+          {blog.likes} likes
+          <button onClick={handleLike} className="like-button">
+            like
+          </button>
+        </div>
+        <div>added by {blog.user.name}</div>
+      </Box>
+      <Box
+        sx={{
+          mt: 2,
+          py: 2,
+          px: 2,
+          backgroundColor: "ghostwhite",
+          borderRadius: 5,
+        }}
+      >
+        <Typography component="h2" variant="h4">
+          Comments
+        </Typography>
+        <BlogCommentForm id={id} />
+      </Box>
+      <Box
+        sx={{
+          mt: 1,
+          py: 2,
+          px: 2,
+          backgroundColor: "ghostwhite",
+          borderRadius: 5,
+        }}
+      >
+        {blog.comments.length === 0 ? (
+          <Typography variant="body">No comments</Typography>
+        ) : (
+          <ul>
+            {blog.comments.map((comment, idx) => (
+              <li key={idx}>{comment}</li>
+            ))}
+          </ul>
+        )}
+      </Box>
 
       {/*  */}
       {/* <div>
@@ -122,7 +183,7 @@ const Blog = () => {
           </button>
         )}
       </div> */}
-    </div>
+    </Box>
   )
 }
 

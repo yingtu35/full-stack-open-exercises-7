@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 
 const BlogCard = ({ blog }) => {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, backgroundColor: "ghostwhite" }}>
       <CardContent>
         <Typography variant="h5" color="text.primary" gutterBottom>
           {blog.title}

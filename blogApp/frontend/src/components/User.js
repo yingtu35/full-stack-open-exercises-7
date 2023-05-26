@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import usersService from "../services/users"
+import BlogPagination from "./BlogPagination"
+
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 const User = () => {
-  // TODO: fetch user data from here
   const [user, setUser] = useState()
   const id = useParams().id
 
@@ -14,15 +17,15 @@ const User = () => {
   if (!user) return
   return (
     <div>
-      <h2>{user.username}</h2>
-      <h3>
-        <strong>added blogs</strong>
-      </h3>
-      <ul>
-        {user.blogs.map((blog) => (
-          <li key={blog.id}>{blog.title}</li>
-        ))}
-      </ul>
+      <Typography component="h2" variant="h3">
+        {user.username}
+      </Typography>
+      <Box sx={{ textAlign: "center" }}>
+        <Typography component="h3" variant="h4">
+          <strong>Added blogs</strong>
+        </Typography>
+      </Box>
+      <BlogPagination blogs={user.blogs} />
     </div>
   )
 }

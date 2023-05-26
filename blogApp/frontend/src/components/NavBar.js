@@ -18,8 +18,9 @@ import Divider from "@mui/material/Divider"
 const pages = ["about", "blogs", "users"]
 const settings = ["Profile", "Account", "Dashboard"]
 
-const nabButton = {
+const navButton = {
   textDecoration: "none",
+  color: "black",
 }
 
 function ResponsiveAppBar({ user, userlogout }) {
@@ -39,6 +40,11 @@ function ResponsiveAppBar({ user, userlogout }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleLogout = () => {
+    handleCloseUserMenu()
+    userlogout()
   }
 
   return (
@@ -123,7 +129,7 @@ function ResponsiveAppBar({ user, userlogout }) {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link key={page} style={nabButton} to={`/${page}`}>
+              <Link key={page} style={navButton} to={`/${page}`}>
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
@@ -134,13 +140,11 @@ function ResponsiveAppBar({ user, userlogout }) {
             ))}
           </Box>
           {!user ? (
-            <Button
-              key="Login"
-              sx={{ my: 2, color: "white", display: "block" }}
-              href="/login"
-            >
-              Login
-            </Button>
+            <Link style={navButton} to={"/login"}>
+              <Button sx={{ my: 2, color: "white", display: "block" }}>
+                Login
+              </Button>
+            </Link>
           ) : (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -165,12 +169,18 @@ function ResponsiveAppBar({ user, userlogout }) {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
+                  <Link
+                    key={setting}
+                    style={navButton}
+                    to={`/users/${user.id}`}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  </Link>
                 ))}
                 <Divider />
-                <MenuItem key="Logout" onClick={userlogout}>
+                <MenuItem key="Logout" onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>
