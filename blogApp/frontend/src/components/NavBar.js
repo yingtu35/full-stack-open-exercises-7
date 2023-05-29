@@ -7,7 +7,7 @@ import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import Menu from "@mui/material/Menu"
-// import MenuIcon from "@mui/icons-material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
 import Container from "@mui/material/Container"
 import Avatar from "@mui/material/Avatar"
 import Tooltip from "@mui/material/Tooltip"
@@ -79,7 +79,7 @@ function ResponsiveAppBar({ user, userlogout }) {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {/* <MenuIcon /> */}
+              <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -102,13 +102,14 @@ function ResponsiveAppBar({ user, userlogout }) {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Link to={`/${page}`}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <Button>
+                      <Typography textAlign="center">{page}</Typography>
+                    </Button>
                   </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap

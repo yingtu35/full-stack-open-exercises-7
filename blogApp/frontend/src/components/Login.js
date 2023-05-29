@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography"
 const Login = ({ userLogin }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [isRemember, setIsRemember] = useState(true)
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -19,6 +20,7 @@ const Login = ({ userLogin }) => {
     const credential = {
       username,
       password,
+      isRemember,
     }
     const isLogged = await userLogin(credential)
     if (isLogged) {
@@ -67,11 +69,9 @@ const Login = ({ userLogin }) => {
           <FormControlLabel
             control={<Checkbox />}
             label="Remember me"
-            checked
+            checked={isRemember}
+            onClick={() => setIsRemember(!isRemember)}
           />
-          {/* <button type="submit" id="login-button">
-            login
-          </button> */}
           <Button type="submit" id="login-button" fullWidth variant="contained">
             login
           </Button>

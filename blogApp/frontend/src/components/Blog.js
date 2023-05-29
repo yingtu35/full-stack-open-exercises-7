@@ -156,33 +156,6 @@ const Blog = () => {
           </ul>
         )}
       </Box>
-
-      {/*  */}
-      {/* <div>
-        {blog.title} {blog.author}
-        <button style={hideWhenShowDetail} onClick={toggleShowDetail}>
-          View
-        </button>
-        <button style={showWhenShowDetail} onClick={toggleShowDetail}>
-          Hide
-        </button>
-      </div>
-      <div style={showWhenShowDetail} className="blogDetail">
-        <div>{blog.id}</div>
-        <div>{blog.url}</div>
-        <div className="like">
-          {blog.likes}{" "}
-          <button onClick={handleLike} className="like-button">
-            like
-          </button>
-        </div>
-        <div>{blog.user.name}</div>
-        {isUserBlog && (
-          <button onClick={handleRemove} id="remove-button">
-            remove
-          </button>
-        )}
-      </div> */}
     </Box>
   )
 }

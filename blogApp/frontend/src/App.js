@@ -23,19 +23,6 @@ import { setUser } from "./reducers/UserReducer"
 
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
-// import Typography from "@mui/material/Typography"
-
-// const navPadding = {
-//   padding: "0.5em",
-// }
-
-// const Title = () => {
-//   return (
-//     <Typography component="h1" variant="h2" className="title">
-//       Blog App
-//     </Typography>
-//   )
-// }
 
 const App = () => {
   const navigate = useNavigate()
@@ -46,11 +33,13 @@ const App = () => {
     try {
       const returnedUser = await loginService.login(credential)
       blogService.setToken(returnedUser.token)
-      const savedUser = {
-        ...returnedUser,
-        timestamp: Date.now() + returnedUser.expiration * 1000,
+      if (credential.isRemember) {
+        const savedUser = {
+          ...returnedUser,
+          timestamp: Date.now() + returnedUser.expiration * 1000,
+        }
+        window.localStorage.setItem("savedUser", JSON.stringify(savedUser))
       }
-      window.localStorage.setItem("savedUser", JSON.stringify(savedUser))
       dispatch(setUser(returnedUser))
       const message = `Logged in as ${returnedUser.name}`
       dispatch(notify(message, false))
@@ -71,7 +60,6 @@ const App = () => {
 
   useEffect(() => {
     const savedUser = JSON.parse(window.localStorage.getItem("savedUser"))
-    // TODO: should check if token has expired
     if (savedUser && savedUser.timestamp > Date.now()) {
       blogService.setToken(savedUser.token)
       dispatch(setUser(savedUser))

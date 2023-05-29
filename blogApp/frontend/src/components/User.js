@@ -12,7 +12,7 @@ const User = () => {
 
   useEffect(() => {
     usersService.getUser(id).then((returnedUser) => setUser(returnedUser))
-  }, [])
+  }, [id])
 
   if (!user) return
   return (

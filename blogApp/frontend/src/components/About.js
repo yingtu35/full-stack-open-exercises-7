@@ -1,12 +1,9 @@
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
-// import Paper from "@mui/material/Paper"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
-
-// const paperStyle = { p: 3, mb: 4 }
 
 const features = [
   {
@@ -42,9 +39,6 @@ const FeatureCard = ({ feature }) => {
         <Typography variant="h4" component="h2" gutterBottom align="left">
           {feature.title}
         </Typography>
-        {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {blog.author}
-        </Typography> */}
         <ul style={{ listStyleType: "none" }}>
           {feature.description.map((line) => (
             <Typography component="li" variant="h6" align="left" key={line}>
@@ -78,38 +72,6 @@ const About = () => {
               <FeatureCard feature={feature} />
             </Grid>
           ))}
-          {/* <Grid item xs={12} sm={4}>
-            <Paper style={paperStyle}>
-              <Typography variant="h4" component="h2" gutterBottom>
-                Discover
-              </Typography>
-              <Typography variant="body1" component="p">
-                Explore a wide range of blog posts on various topics.
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper style={paperStyle}>
-              <Typography variant="h4" component="h2" gutterBottom>
-                Create
-              </Typography>
-              <Typography variant="body1" component="p">
-                Share your knowledge and experiences by creating your own blog
-                posts.
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper style={paperStyle}>
-              <Typography variant="h4" component="h2" gutterBottom>
-                Connect
-              </Typography>
-              <Typography variant="body1" component="p">
-                Connect with other bloggers and readers to exchange ideas and
-                insights.
-              </Typography>
-            </Paper>
-          </Grid> */}
         </Grid>
       </Container>
     </Box>

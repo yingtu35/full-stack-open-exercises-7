@@ -32,10 +32,18 @@ const Users = () => {
         <Table sx={{ minWidth: "300px" }}>
           <TableHead>
             <TableRow>
-              <TableCell>Username</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Blogs created</TableCell>
-              <TableCell align="right">Profile</TableCell>
+              <TableCell>
+                <strong>Username</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Name</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Blogs created</strong>
+              </TableCell>
+              <TableCell align="right">
+                <strong>Profile</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -57,29 +65,6 @@ const Users = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <h2>Users</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <strong>user</strong>
-            </th>
-            <th>
-              <strong>blogs created</strong>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>
-                <Link to={`/users/${user.id}`}>{user.username}</Link>
-              </td>
-              <td>{user.blogs.length}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
     </div>
   )
 }
